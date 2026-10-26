@@ -1,7 +1,7 @@
 # 🫘 Dry Bean Classifier Lab — ML Classification Models & Streamlit Deployment
 
-**Live app:** <STREAMLIT_APP_LINK>
-**GitHub repository:** https://github.com/AdvenExplorer08/drybean-classifier
+- **Live Streamlit app:** https://drybean-classifier-kumar.streamlit.app
+- **GitHub repository:** https://github.com/AdvenExplorer08/drybean-classifier
 
 ---
 

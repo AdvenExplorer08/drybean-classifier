@@ -165,10 +165,11 @@ with tab_eval:
     if params:
         st.caption("Tuned hyper-parameters: " + ", ".join(f"`{k.replace('clf__', '')}={v}`" for k, v in params.items()))
 
-    cols = st.columns(6)
-    for col, key in zip(cols, METRIC_ORDER):
-        val = metrics[key]
-        col.metric(key, "N/A" if np.isnan(val) else f"{val:.4f}")
+    # 2 rows x 3 cards so the full 4-decimal value always fits, even on narrow screens
+    for row_keys in (METRIC_ORDER[:3], METRIC_ORDER[3:]):
+        for col, key in zip(st.columns(3), row_keys):
+            val = metrics[key]
+            col.metric(key, "N/A" if np.isnan(val) else f"{val:.4f}")
     st.caption("Precision, Recall, F1 and AUC (one-vs-rest) use the support-weighted average over the 7 classes.")
 
     left, right = st.columns([1.15, 1])
@@ -190,13 +191,17 @@ with tab_eval:
         report = classification_report(y_eval, y_pred, output_dict=True, zero_division=0)
         overall_acc = report.pop("accuracy")
         report_df = pd.DataFrame(report).T
-        acc_row = pd.DataFrame({"precision": [np.nan], "recall": [np.nan], "f1-score": [overall_acc],
-                                "support": [len(y_eval)]}, index=["accuracy"])
-        report_df = pd.concat([report_df.iloc[:-2], acc_row, report_df.iloc[-2:]])
-        report_df["support"] = report_df["support"].astype(int)
-        st.dataframe(report_df.style.format({"precision": "{:.4f}", "recall": "{:.4f}",
-                                             "f1-score": "{:.4f}", "support": "{:,}"}, na_rep=""),
-                     width="stretch", height=420)
+        # Pre-format as text so the accuracy row shows blanks (not "None") on every Streamlit version
+        shown = pd.DataFrame({
+            "precision": report_df["precision"].map("{:.4f}".format),
+            "recall": report_df["recall"].map("{:.4f}".format),
+            "f1-score": report_df["f1-score"].map("{:.4f}".format),
+            "support": report_df["support"].astype(int).map("{:,}".format),
+        })
+        acc_row = pd.DataFrame({"precision": [""], "recall": [""], "f1-score": [f"{overall_acc:.4f}"],
+                                "support": [f"{len(y_eval):,}"]}, index=["accuracy"])
+        shown = pd.concat([shown.iloc[:-2], acc_row, shown.iloc[-2:]])
+        st.dataframe(shown, width="stretch", height=35 * (len(shown) + 1) + 3)
 
 # ---------------------------------------------------------------- tab 2: all models
 with tab_compare:
