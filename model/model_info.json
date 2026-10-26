@@ -1,0 +1,101 @@
+{
+  "dataset": "UCI Dry Bean Dataset (id 602)",
+  "target": "Class",
+  "feature_columns": [
+    "Area",
+    "Perimeter",
+    "MajorAxisLength",
+    "MinorAxisLength",
+    "AspectRatio",
+    "Eccentricity",
+    "ConvexArea",
+    "EquivDiameter",
+    "Extent",
+    "Solidity",
+    "Roundness",
+    "Compactness",
+    "ShapeFactor1",
+    "ShapeFactor2",
+    "ShapeFactor3",
+    "ShapeFactor4"
+  ],
+  "classes": [
+    "BARBUNYA",
+    "BOMBAY",
+    "CALI",
+    "DERMASON",
+    "HOROZ",
+    "SEKER",
+    "SIRA"
+  ],
+  "model_files": {
+    "Logistic Regression": "logistic_regression.joblib",
+    "Decision Tree": "decision_tree.joblib",
+    "KNN": "knn.joblib",
+    "Naive Bayes": "naive_bayes.joblib",
+    "Support Vector Machine": "svm.joblib"
+  },
+  "best_params": {
+    "Logistic Regression": {
+      "clf__C": 1
+    },
+    "Decision Tree": {
+      "max_depth": 8,
+      "min_samples_leaf": 10
+    },
+    "KNN": {
+      "clf__n_neighbors": 9,
+      "clf__weights": "distance"
+    },
+    "Naive Bayes": {},
+    "Support Vector Machine": {
+      "clf__C": 10
+    }
+  },
+  "test_metrics": {
+    "Logistic Regression": {
+      "Accuracy": 0.9228,
+      "AUC": 0.9945,
+      "Precision": 0.9232,
+      "Recall": 0.9228,
+      "F1": 0.923,
+      "MCC": 0.9067
+    },
+    "Decision Tree": {
+      "Accuracy": 0.914,
+      "AUC": 0.9859,
+      "Precision": 0.9164,
+      "Recall": 0.914,
+      "F1": 0.9146,
+      "MCC": 0.8963
+    },
+    "KNN": {
+      "Accuracy": 0.9247,
+      "AUC": 0.9898,
+      "Precision": 0.9252,
+      "Recall": 0.9247,
+      "F1": 0.9248,
+      "MCC": 0.9089
+    },
+    "Naive Bayes": {
+      "Accuracy": 0.763,
+      "AUC": 0.965,
+      "Precision": 0.7632,
+      "Recall": 0.763,
+      "F1": 0.7611,
+      "MCC": 0.714
+    },
+    "Support Vector Machine": {
+      "Accuracy": 0.935,
+      "AUC": 0.9955,
+      "Precision": 0.9352,
+      "Recall": 0.935,
+      "F1": 0.9351,
+      "MCC": 0.9214
+    }
+  },
+  "train_rows": 10834,
+  "test_rows": 2709,
+  "random_state": 21,
+  "sklearn_version": "1.9.1"
+}
